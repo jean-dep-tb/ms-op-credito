@@ -12,15 +12,15 @@ public interface OperacionService {
 	
 	Mono<OperationCreditAccount> findByIdOperacion(String id);
 	
-	Mono<OperationCreditAccount> saveOperacion(OperationCreditAccount producto);
+	Mono<OperationCreditAccount> saveOperacionCredito(OperationCreditAccount producto); //saveOperacion
 	
 	Flux<OperationCreditAccount> findAllByIdOperacionDniCliente(String dni);
 
-	Flux<OperationCreditAccount> saveOperacionList(List<OperationCreditAccount> producto);
+	Flux<OperationCreditAccount> saveOperacionCredito(List<OperationCreditAccount> producto); //saveOperacionList
 	
 	Mono<OperationCreditAccount> saveOperacionRetiro(OperationCreditAccount producto);
 
 	Mono<OperationCreditAccount> saveOperacionDeposito(OperationCreditAccount producto);
 
-	Flux<OperationCreditAccount> consultaMovimientos(String dni, String numTarjeta);
+	Flux<OperationCreditAccount> transaccionMovimiento(String dni, String numTarjeta); //consultaMovimientos
 }

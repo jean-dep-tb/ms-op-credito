@@ -57,7 +57,7 @@ public class SpringBootWebfluMsOpCreditoApplication implements CommandLineRunner
 						
 						)					
 					.flatMap(operacion -> {
-						return operacionService.saveOperacion(operacion);
+						return operacionService.saveOperacionCredito(operacion);
 					})					
 				).subscribe(operacion -> log.info("Insert: " + operacion.getCuenta_destino() 
 					+ " " + operacion.getCuenta_origen() + " " + operacion.getMontoPago()));
