@@ -25,7 +25,7 @@ public class CreditAccount {
 	private Double consumo;
 	private String usuario;
 	private String clave;
-	
+	private String codigo_bancario;
 
 	
 	//private tipoProducto tipoCliente;
