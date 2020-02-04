@@ -1,6 +1,5 @@
 package spring.boot.webflu.ms.op.credito.app.controllers;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,74 +14,68 @@ import org.springframework.web.bind.annotation.RestController;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import spring.boot.webflu.ms.op.credito.app.documents.OperationCreditAccount;
-import spring.boot.webflu.ms.op.credito.app.service.OperacionService;
-import spring.boot.webflu.ms.op.credito.app.service.TipoOperacionService;
+import spring.boot.webflu.ms.op.credito.app.documents.OperacionCuentaCredito;
+import spring.boot.webflu.ms.op.credito.app.service.OperacionCreditoService;
 
 @RequestMapping("/api/OperCuentasCreditos")
 @RestController
 public class OperacionCreditoControllers {
 
 	@Autowired
-	private OperacionService operacionService;
-
-	@Autowired
-	private TipoOperacionService tipoOperacionService;
-
+	private OperacionCreditoService operacionService;
 	
 	@GetMapping
-	public Mono<ResponseEntity<Flux<OperationCreditAccount>>> findAll() {
+	public Mono<ResponseEntity<Flux<OperacionCuentaCredito>>> findAll() {
 		return Mono.just(
-				ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON_UTF8).body(operacionService.findAllOperacion())
+				ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(operacionService.findAllOperacion())
 		);
 	}
-	
-	
+		
 	@GetMapping("/{id}")
-	public Mono<ResponseEntity<OperationCreditAccount>> viewId(@PathVariable String id) {
+	public Mono<ResponseEntity<OperacionCuentaCredito>> viewId(@PathVariable String id) {
 		return operacionService.findByIdOperacion(id)
-				.map(p -> ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON_UTF8).body(p))
+				.map(p -> ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(p))
 				.defaultIfEmpty(ResponseEntity.notFound().build());
 	}
 
 	
 	@PutMapping
-	public Mono<OperationCreditAccount> updateProducto(@RequestBody OperationCreditAccount oper) {
+	public Mono<OperacionCuentaCredito> updateProducto(@RequestBody OperacionCuentaCredito oper) {
 		System.out.println(oper.toString());
 		return operacionService.saveOperacionCredito(oper);
 	}
 	
-	
+	//REGISTRO DE LAS OPERACIONES DE CREDITO
 	@PostMapping
-	public Mono<OperationCreditAccount> guardarOperacionCredito(@RequestBody OperationCreditAccount oper) {
+	public Mono<OperacionCuentaCredito> operacionCredito(@RequestBody OperacionCuentaCredito oper) {
 		return operacionService.saveOperacionCredito(oper);
 	}
 
 	
-	@GetMapping("/dni/{dni}")
-	public Flux<OperationCreditAccount> operacionCliente(@PathVariable String dni) {
-		Flux<OperationCreditAccount> operacion = operacionService.findAllByIdOperacionDniCliente(dni);
+	@GetMapping("/doc/{dni}")
+	public Flux<OperacionCuentaCredito> operacionCreditoCliente(@PathVariable String dni) {
+		Flux<OperacionCuentaCredito> operacion = operacionService.findAllByIdOperacionDniCliente(dni);
 		return operacion;
 	}
 	
 	
-	@PostMapping("/consumo")
-	public Mono<OperationCreditAccount> guardarOperacionRetiro(@RequestBody OperationCreditAccount oper) {
-		//System.out.println(producto.toString());
+	@PutMapping("/consumo")
+	public Mono<OperacionCuentaCredito> operacionRetiro(@RequestBody OperacionCuentaCredito oper) {
+		
 		return operacionService.saveOperacionRetiro(oper);
 	}
 
 	
-	@PostMapping("/pago")
-	public Mono<OperationCreditAccount> guardarOperacionDeposito(@RequestBody OperationCreditAccount producto) {
+	@PutMapping("/pago")
+	public Mono<OperacionCuentaCredito> operacionDeposito(@RequestBody OperacionCuentaCredito producto) {
 		//System.out.println(producto.toString());
 		return operacionService.saveOperacionDeposito(producto);
 	}
 
-	
-	@GetMapping("/MovimientosBancarios/{dni}/{num_cuenta}")
-	public Flux<OperationCreditAccount> transaccionesBancarias(@PathVariable String dni, @PathVariable String num_cuenta) {
-		Flux<OperationCreditAccount> oper = operacionService.transaccionMovimiento(dni, num_cuenta);
+	//REGISTRAR TODOS LOS MOVIMIENTOS DE CREDITO
+	@GetMapping("/movimientoBancoCredito/{dni}/{num_cuenta}")
+	public Flux<OperacionCuentaCredito> transaccionesBancarias(@PathVariable String dni, @PathVariable String num_cuenta) {
+		Flux<OperacionCuentaCredito> oper = operacionService.transaccionMovimiento(dni, num_cuenta);
 		return oper;
 	}
 	

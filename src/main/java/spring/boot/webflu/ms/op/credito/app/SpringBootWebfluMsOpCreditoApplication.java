@@ -1,7 +1,5 @@
 package spring.boot.webflu.ms.op.credito.app;
 
-import java.util.Date;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,20 +10,20 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 
 import reactor.core.publisher.Flux;
-import spring.boot.webflu.ms.op.credito.app.documents.OperationCreditAccount;
-import spring.boot.webflu.ms.op.credito.app.documents.TypeOperation;
-import spring.boot.webflu.ms.op.credito.app.impl.TipoOperacionServiceImpl;
-import spring.boot.webflu.ms.op.credito.app.service.OperacionService;
+import spring.boot.webflu.ms.op.credito.app.documents.OperacionCuentaCredito;
+import spring.boot.webflu.ms.op.credito.app.documents.TipoOperacionCredito;
+import spring.boot.webflu.ms.op.credito.app.service.OperacionCreditoService;
+import spring.boot.webflu.ms.op.credito.app.service.TipoOperacionCreditoServiceImpl;
 
 @EnableEurekaClient
 @SpringBootApplication
 public class SpringBootWebfluMsOpCreditoApplication implements CommandLineRunner{
 	
 	@Autowired
-	private OperacionService operacionService;
+	private OperacionCreditoService operacionService;
 	
 	@Autowired
-	private TipoOperacionServiceImpl tipoOperacionServiceImpl;
+	private TipoOperacionCreditoServiceImpl tipoOperacionServiceImpl;
 	
 	@Autowired
 	private ReactiveMongoTemplate mongoTemplate;
@@ -42,8 +40,8 @@ public class SpringBootWebfluMsOpCreditoApplication implements CommandLineRunner
 		mongoTemplate.dropCollection("Operaciones").subscribe();
 		mongoTemplate.dropCollection("tipoOperacion").subscribe();
 		
-		TypeOperation deposito = new TypeOperation("1","Deposito");
-		TypeOperation retiro = new TypeOperation("2","Retiro");
+		TipoOperacionCredito deposito = new TipoOperacionCredito("1","Deposito");
+		TipoOperacionCredito retiro = new TipoOperacionCredito("2","Retiro");
 		
 		Flux.just(deposito,retiro)
 		.flatMap(tipoOperacionServiceImpl::saveTipoProducto)
@@ -52,8 +50,8 @@ public class SpringBootWebfluMsOpCreditoApplication implements CommandLineRunner
 		}).thenMany(					
 				Flux.just(
 					
-						new OperationCreditAccount("47305710","100001","100003", "2019-01-28",deposito,9000.0),
-						new OperationCreditAccount("47305710","100002","100004", "2019-01-28",retiro,8000.0)
+						new OperacionCuentaCredito("47305710","100001","100003", "2019-01-28",deposito,9000.0,"bcp"),
+						new OperacionCuentaCredito("47305710","100002","100004", "2019-01-28",retiro,8000.0,"bbva")
 						
 						)					
 					.flatMap(operacion -> {
