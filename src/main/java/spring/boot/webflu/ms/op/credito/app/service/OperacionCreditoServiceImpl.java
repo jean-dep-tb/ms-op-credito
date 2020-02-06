@@ -51,7 +51,6 @@ public class OperacionCreditoServiceImpl implements OperacionCreditoService {
 	}
 	@Override
 	public Flux<OperacionCuentaCredito> saveOperacionCredito(List<OperacionCuentaCredito> producto) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -64,10 +63,10 @@ public class OperacionCreditoServiceImpl implements OperacionCreditoService {
 		
 		//RETIRAR DE UNA CUENTA DE CREDITO
 		Mono<CuentaCredito> oper = productoCreditoClient
-				.retiroBancarioCredito(operacion.getCuenta_origen(), operacion.getMontoPago(),operacion.getCodigo_bancario());
+				.retiroBancarioCredito(operacion.getCuenta_origen(), operacion.getMontoPago(),operacion.getCodigoBanco());
 				
 				 return oper.flatMap(c->{
-						if(c.getNumero_cuenta() == null) 
+						if(c.getNumeroCuenta() == null) 
 						{	
 							return Mono.error(new InterruptedException("CUENTA INVALIDA"));
 						}
@@ -87,11 +86,14 @@ public class OperacionCreditoServiceImpl implements OperacionCreditoService {
 	public Mono<OperacionCuentaCredito> saveOperacionDeposito(OperacionCuentaCredito operacion)
 	{
 		
+		System.out.println("codigo banco : " + operacion.getCodigoBanco());
+		System.out.println("cuenta : " +  operacion.getCuenta_origen());
+		
 		 Mono<CuentaCredito> oper = productoCreditoClient
-					.despositoBancarioCredito(operacion.getCuenta_origen(), operacion.getMontoPago(),operacion.getCodigo_bancario());
+					.despositoBancarioCredito(operacion.getCuenta_origen(), operacion.getMontoPago(),operacion.getCodigoBanco());
 		 
 		 return oper.flatMap(c->{
-				if(c.getNumero_cuenta() == null) 
+				if(c.getNumeroCuenta() == null) 
 				{	
 					return Mono.error(new InterruptedException("CUENTA INVALIDA"));
 				}

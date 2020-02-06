@@ -25,19 +25,21 @@ public class OperacionCuentaCredito {
 	@NotEmpty
 	private double montoPago;
 	
+	private String numeroCuenta;
+	
 	@NotEmpty
-	private String codigo_bancario;
+	private String codigoBanco;//codigo_bancario
 	
 	
 	public OperacionCuentaCredito(String dni,String cuenta_origen,String cuenta_destino,String fechaOperacion,
-			TipoOperacionCredito tipoOperacion,double montoPago,String codigo_bancario) {
+			TipoOperacionCredito tipoOperacion,double montoPago,String codigoBanco) {
 		this.dni = dni;
 		this.cuenta_origen = cuenta_origen;
 		this.cuenta_destino = cuenta_destino;
 		this.fechaOperacion = fechaOperacion;
 		this.tipoOperacion = tipoOperacion;
 		this.montoPago = montoPago;
-		this.codigo_bancario = codigo_bancario;
+		this.codigoBanco = codigoBanco;
 	}
 
 

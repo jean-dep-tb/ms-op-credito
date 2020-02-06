@@ -58,7 +58,7 @@ class SpringBootWebfluMsOpCreditoApplicationTests {
 		ctCredito.setCuenta_destino("100002");		
 		ctCredito.setTipoOperacion(ticd);
 		ctCredito.setMontoPago(3000.0);
-		ctCredito.setCodigo_bancario("bcp");
+		ctCredito.setCodigoBanco("bcp");
 		
 		client.post()
 		.uri("/api/OperCuentasCreditos")
@@ -76,7 +76,7 @@ class SpringBootWebfluMsOpCreditoApplicationTests {
 			Assertions.assertThat(b.getCuenta_destino()).isNotEmpty().isEqualTo("100002");
 			Assertions.assertThat(b.getTipoOperacion().getDescripcion()).isNotEmpty().isEqualTo("deposito");
 			Assertions.assertThat(b.getMontoPago()).isEqualTo(3000.0);
-			Assertions.assertThat(b.getCodigo_bancario()).isNotEmpty().isEqualTo("bcp");
+			Assertions.assertThat(b.getCodigoBanco()).isNotEmpty().isEqualTo("bcp");
 		});
 	}
 	

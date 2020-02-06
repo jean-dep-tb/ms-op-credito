@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class CuentaCredito {
 	private String id;
-	private String numero_cuenta;
+	private String numeroCuenta;
 	private String dni;
 	private TipoCuentaCredito tipoProducto;
 	private String fecha_afiliacion;
@@ -19,7 +19,7 @@ public class CuentaCredito {
 	private Double consumo;
 	private String usuario;
 	private String clave;
-	private String codigo_bancario;
+	private String codigoBanco;//codigo_bancario
 
 	
 	//private tipoProducto tipoCliente;
