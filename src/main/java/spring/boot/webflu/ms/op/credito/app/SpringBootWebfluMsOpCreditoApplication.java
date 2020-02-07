@@ -9,12 +9,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
-
 import reactor.core.publisher.Flux;
 import spring.boot.webflu.ms.op.credito.app.documents.OperacionCuentaCredito;
 import spring.boot.webflu.ms.op.credito.app.documents.TipoOperacionCredito;
 import spring.boot.webflu.ms.op.credito.app.service.OperacionCreditoService;
-import spring.boot.webflu.ms.op.credito.app.service.TipoOperacionCreditoServiceImpl;
+import spring.boot.webflu.ms.op.credito.app.service.impl.TipoOperacionCreditoServiceImpl;
+
 
 @EnableCircuitBreaker
 @EnableEurekaClient
